@@ -1,0 +1,4 @@
+;(()=>{
+let log = console.log;
+
+})();
