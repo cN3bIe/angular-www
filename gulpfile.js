@@ -11,7 +11,7 @@ const
 	sourcemaps = require('gulp-sourcemaps'),
 	path = {
 		app: 'app/',
-		dist: 'dist/'
+		bundle: 'app/bundle/'
 	};
 
 
@@ -22,7 +22,7 @@ gulp
 		.pipe( sass({ outputStyle: 'compressed' }) ).on( 'error', sass.logError )
 		.pipe( sourcemaps.write() )
 		.pipe( rename( {'suffix':'.min'} ) )
-		.pipe( gulp.dest( path.app + 'css') )
+		.pipe( gulp.dest( path.bundle + 'css') )
 		.pipe( browserSync.reload({ stream:!0 }) ) )
 
 
@@ -38,7 +38,7 @@ gulp
 		})
 		.pipe( concat( 'main.min.js' ) )
 		.pipe( uglify() )
-		.pipe( gulp.dest( path.app + 'js') ) )
+		.pipe( gulp.dest( path.bundle + 'js') ) )
 
 	.task( 'browser-sync', ()=>{
 		browserSync({
@@ -52,19 +52,17 @@ gulp
 	.task( 'vendor-css',() => gulp.src( [
 			'node_modules/angular-material/angular-material.min.css'
 		] )
-		.pipe( sourcemaps.init() )
 		.pipe( concat( 'vendor.min.css' ) )
 		.pipe( cssnano() )
-		.pipe( sourcemaps.write() )
-		.pipe( gulp.dest( path.app + 'css') ) )
+		.pipe( gulp.dest( path.bundle + 'css') ) )
 
 	.task( 'vendor-js',() => gulp.src( [
 			'node_modules/angular/angular.min.js',
-			'node_modules/angular-material/angular-material.min.js'
+			// 'node_modules/angular-material/angular-material.min.js'
 		] )
 		.pipe( concat( 'vendor.min.js') )
 		.pipe( uglify() )
-		.pipe( gulp.dest( path.app + 'js' ) ) )
+		.pipe( gulp.dest( path.bundle + 'js' ) ) )
 
 
 	.task( 'vendor',[ 'vendor-css','vendor-js' ])
