@@ -80,37 +80,23 @@
 		})
 	])
 	.controller('CountryCtrl',['$timeout', '$q', '$log','contryREST' , function( $timeout, $q, $log,contryREST ) {
-		// $scope.change = ( country ) => {
-		// };
-		let self = this;
-
-		self.simulateQuery = false;
-		self.isDisabled    = false;
-
-		self.repos         = loadAll();
-		self.querySearch   = querySearch;
-		self.selectedItemChange = selectedItemChange;
-		self.searchTextChange   = searchTextChange;
+		this.querySearch   = querySearch;
+		this.selectedItemChange = selectedItemChange;
+		this.searchTextChange   = searchTextChange;
 
 		function querySearch (query) {
-			let type = query?'name':'all';
+			let
+				type = query?'name':'all',
+				deferred = $q.defer();
 			contryREST.query({
 				type,
 				country: query.toLowerCase()
 			}, result => {
-				result;
+				deferred.resolve( result );
 			}, error => {
 				log( 'error',error );
 			});
-			var results = query ? self.repos.filter( createFilterFor(query) ) : self.repos,
-			deferred;
-			if (self.simulateQuery) {
-				deferred = $q.defer();
-				$timeout(function () { deferred.resolve( results ); }, Math.random() * 1000, false);
-				return deferred.promise;
-			} else {
-				return results;
-			}
+			return deferred.promise;
 		}
 
 		function searchTextChange(text) {
@@ -119,60 +105,6 @@
 
 		function selectedItemChange(item) {
 			$log.info('Item changed to ' + JSON.stringify(item));
-		}
-
-		function loadAll() {
-			var repos = [
-			{
-				'name'      : 'AngularJS',
-				'url'       : 'https://github.com/angular/angular.js',
-				'watchers'  : '3,623',
-				'forks'     : '16,175',
-			},
-			{
-				'name'      : 'Angular',
-				'url'       : 'https://github.com/angular/angular',
-				'watchers'  : '469',
-				'forks'     : '760',
-			},
-			{
-				'name'      : 'AngularJS Material',
-				'url'       : 'https://github.com/angular/material',
-				'watchers'  : '727',
-				'forks'     : '1,241',
-			},
-			{
-				'name'      : 'Angular Material',
-				'url'       : 'https://github.com/angular/material2',
-				'watchers'  : '727',
-				'forks'     : '1,241',
-			},
-			{
-				'name'      : 'Bower Material',
-				'url'       : 'https://github.com/angular/bower-material',
-				'watchers'  : '42',
-				'forks'     : '84',
-			},
-			{
-				'name'      : 'Material Start',
-				'url'       : 'https://github.com/angular/material-start',
-				'watchers'  : '81',
-				'forks'     : '303',
-			}
-			];
-			return repos.map( function (repo) {
-				repo.value = repo.name.toLowerCase();
-				return repo;
-			});
-		}
-
-		function createFilterFor(query) {
-			var lowercaseQuery = angular.lowercase(query);
-
-			return function filterFn(item) {
-				return (item.value.indexOf(lowercaseQuery) === 0);
-			};
-
 		}
 	}]);
 })();

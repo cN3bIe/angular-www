@@ -17,13 +17,8 @@
 				</div>
 			</md-input-container>
 		</div>
-		<div>
-
-		</div>
 		<div layout="row" ng-controller="CountryCtrl as ctrl">
 			<md-autocomplete flex="50" class="md-block"
-				ng-disabled="ctrl.isDisabled"
-				md-no-cache="ctrl.noCache"
 				md-selected-item="ctrl.selectedItem"
 				md-search-text-change="ctrl.searchTextChange(ctrl.searchText)"
 				md-search-text="ctrl.searchText"
@@ -39,11 +34,22 @@
 					</span>
 				</md-item-template>
 			</md-autocomplete>
-
-			<md-input-container flex="50" class="md-block">
-				<label>Введите город прибывания</label>
-				<input type="text" name="clientCite" ng-model="project.clientCite" minlength="2">
-			</md-input-container>
+			<md-autocomplete flex="50" class="md-block"
+				md-selected-item="ctrl.selectedItem"
+				md-search-text-change="ctrl.searchTextChange(ctrl.searchText)"
+				md-search-text="ctrl.searchText"
+				md-selected-item-change="ctrl.selectedItemChange(item)"
+				md-items="item in ctrl.querySearch(ctrl.searchText)"
+				md-item-text="item.name"
+				md-min-length="0"
+				placeholder="Введите город прибывания"
+				md-menu-class="autocomplete-custom-template">
+				<md-item-template>
+					<span class="item-title">
+						<span> {{item.name}} </span>
+					</span>
+				</md-item-template>
+			</md-autocomplete>
 		</div>
 
 
