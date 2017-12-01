@@ -71,40 +71,41 @@
 
 		};
 	}])
+	.controller('RegistrationForm',['$scope',function( $scope ){
+		log( this );
+	}])
 	.factory('contryREST',[
 		'$resource',
 		$resource => $resource('https://restcountries.eu/rest/v2/:type/:country',{
 			type: '@type',
 			country: '@country',
-			fields: 'name'
+			fields: '@fields'
 		})
 	])
-	.controller('CountryCtrl',['$timeout', '$q', '$log','contryREST' , function( $timeout, $q, $log,contryREST ) {
-		this.querySearch   = querySearch;
-		this.selectedItemChange = selectedItemChange;
-		this.searchTextChange   = searchTextChange;
-
-		function querySearch (query) {
+	.controller('CtrlCountryCity',['$timeout', '$q', '$log','contryREST' , function( $timeout, $q, $log,contryREST ) {
+		this.querySearch = (query,country) => {
 			let
 				type = query?'name':'all',
+				fields = country?'name':'capital',
 				deferred = $q.defer();
 			contryREST.query({
 				type,
-				country: query.toLowerCase()
+				country: query.toLowerCase(),
+				fields
 			}, result => {
+				log(result);
 				deferred.resolve( result );
 			}, error => {
 				log( 'error',error );
 			});
 			return deferred.promise;
 		}
-
-		function searchTextChange(text) {
+		this.selectedItemChange = text => {
 			$log.info('Text changed to ' + text);
 		}
-
-		function selectedItemChange(item) {
+		this.searchTextChange = item => {
 			$log.info('Item changed to ' + JSON.stringify(item));
 		}
+
 	}]);
 })();

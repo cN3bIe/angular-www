@@ -1,5 +1,5 @@
-<md-content layout-padding>
-	<form name="projectForm">
+<md-content layout-padding ng-controller="RegistrationForm as forms">
+	<form name="projectForm" ng-submit="forms.submit()">
 		<div layout="row">
 			<md-input-container flex="50">
 				<label>Имя</label>
@@ -17,13 +17,13 @@
 				</div>
 			</md-input-container>
 		</div>
-		<div layout="row" ng-controller="CountryCtrl as ctrl">
+		<div layout="row" ng-controller="CtrlCountryCity as ctrlCC">
 			<md-autocomplete flex="50" class="md-block"
-				md-selected-item="ctrl.selectedItem"
-				md-search-text-change="ctrl.searchTextChange(ctrl.searchText)"
-				md-search-text="ctrl.searchText"
-				md-selected-item-change="ctrl.selectedItemChange(item)"
-				md-items="item in ctrl.querySearch(ctrl.searchText)"
+				md-selected-item="ctrlCC.selectedItemCountry"
+				md-search-text-change="ctrlCC.searchTextChange(ctrlCC.searchTextCountry)"
+				md-search-text="ctrlCC.searchTextCountry"
+				md-selected-item-change="ctrlCC.selectedItemChange(item)"
+				md-items="item in ctrlCC.querySearch(ctrlCC.searchTextCountry,true)"
 				md-item-text="item.name"
 				md-min-length="0"
 				placeholder="Введите страну прибывания"
@@ -35,18 +35,18 @@
 				</md-item-template>
 			</md-autocomplete>
 			<md-autocomplete flex="50" class="md-block"
-				md-selected-item="ctrl.selectedItem"
-				md-search-text-change="ctrl.searchTextChange(ctrl.searchText)"
-				md-search-text="ctrl.searchText"
-				md-selected-item-change="ctrl.selectedItemChange(item)"
-				md-items="item in ctrl.querySearch(ctrl.searchText)"
-				md-item-text="item.name"
+				md-selected-item="ctrlCC.selectedItemCity"
+				md-search-text-change="ctrlCC.searchTextChange(ctrlCC.searchTextCity)"
+				md-search-text="ctrlCC.searchTextCity"
+				md-selected-item-change="ctrlCC.selectedItemChange(item)"
+				md-items="item in ctrlCC.querySearch(ctrlCC.searchTextCity,false)"
+				md-item-text="item.capital"
 				md-min-length="0"
 				placeholder="Введите город прибывания"
 				md-menu-class="autocomplete-custom-template">
 				<md-item-template>
 					<span class="item-title">
-						<span> {{item.name}} </span>
+						<span> {{item.capital}} </span>
 					</span>
 				</md-item-template>
 			</md-autocomplete>
