@@ -1,18 +1,52 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="myApp">
+<html lang="en">
 <head>
 	<meta charset="UTF-8">
 	<title>Angular-www</title>
-	<link rel="stylesheet" type="text/css" href="/bundle/css/vendor.min.css">
-	<link rel="stylesheet" type="text/css" href="/bundle/css/main.min.css">
+	<link rel="icon" type="image/png" href="/img/angular.svg" />
+	<link rel="stylesheet" type="text/css" href="/bundle/css/vendor.min.css" />
+	<link rel="stylesheet" type="text/css" href="/bundle/css/main.min.css" />
 </head>
-<body ng-controller="myController">
-	<section class="section">
-		<div class="wr">
-			<h1 class="title">Hello {{1+2}}</h1>
+<body ng-app="app">
+	<div ng-controller="AppCtrl" ng-cloak layout="column">
+		<md-sidenav
+			class="md-sidenav-left"
+			md-component-id="left">
+
+			<md-toolbar class="md-theme-indigo">
+				<h1 class="md-toolbar-tools">Меню</h1>
+			</md-toolbar>
+			<md-content layout-padding ng-controller="LeftCtrl">
+				<md-button ng-click="close()" class="md-icon-button">X</md-button>
+				<nav class="navbar navbar-inverse" role="navigation">
+					<div class="navbar-header">
+						<a class="navbar-brand" ui-sref="#">Страницы</a>
+					</div>
+					<ul class="nav navbar-nav">
+						<li><a ng-click="close()" ui-sref="registration">Регистрация</a></li>
+						<li><a ng-click="close()" ui-sref="login">Войти</a></li>
+						<li><a ng-click="close()" ui-sref="profile">Профиль</a></li>
+					</ul>
+				</nav>
+			</md-content>
+
+		</md-sidenav>
+		<md-content>
+				<md-toolbar class="md-hue-2">
+					<div class="md-toolbar-tools">
+						<md-button class="md-icon-button" aria-label="Settings" ng-disabled="false"  ng-click="toggleLeft()">
+							<md-icon md-svg-icon="img/icons/menu.svg"></md-icon>
+						</md-button>
+
+						<h2 flex md-truncate>{{title}}</h2>
+					</div>
+				</md-toolbar>
+		</md-content>
+		<div layout="row">
+			<div ui-view></div>
 		</div>
-	</section>
+	</div>
 	<script type="text/javascript" src="/bundle/js/vendor.min.js"></script>
-	<script type="text/javascript" src="/bundle/js/main.min.js"></script>
+	<script type="text/javascript" src="/bundle/js/bundle.js"></script>
 </body>
 </html>

@@ -1,0 +1,23 @@
+<md-content layout-padding>
+	<form name="projectForm">
+		<md-input-container class="md-block">
+			<label>Ваш E-mail</label>
+			<input required type="email" name="clientEmail" ng-model="project.clientEmail"
+				minlength="10" maxlength="100" ng-pattern="/^.+@.+\..+$/" />
+			<div ng-messages="projectForm.clientEmail.$error" role="alert">
+				<div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">Email ошибочка.</div>
+			</div>
+		</md-input-container>
+
+		<md-input-container class="md-block">
+			<label>Пароль</label>
+			<input required type="password" name="clientPass" ng-model="project.clientPass" minlength="6" maxlength="20" />
+			<div ng-messages="projectForm.clientPass.$error" role="alert">
+				<div ng-message-exp="['required', 'minlength', 'maxlength']">Пароль с ошибкой.</div>
+			</div>
+		</md-input-container>
+		<div>
+			<md-button type="submit">Войти</md-button>
+		</div>
+	</form>
+</md-content>
