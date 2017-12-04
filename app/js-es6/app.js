@@ -159,7 +159,7 @@ let loginRequired = function($location, $q) {
 			contryREST.query({
 				type,
 				country: query.toLowerCase(),
-				fields
+				fields: (!country?fields:fields + ';capital')
 			}, result => {
 				deferred.resolve( result );
 			}, error => {
@@ -169,7 +169,10 @@ let loginRequired = function($location, $q) {
 		}
 		this.selectedItemChange = obj => {
 			$log.info('Text changed to ' + JSON.stringify( obj ) );
-			if( obj && obj.name ) $scope.user.country = obj.name;
+			if( obj && obj.name ){
+				$scope.user.country = obj.name;
+				this.searchTextCity = $scope.user.city = obj.capital;
+			}
 			if( obj && obj.capital ) $scope.user.city = obj.capital;
 		}
 		this.searchTextChange = obj => {
