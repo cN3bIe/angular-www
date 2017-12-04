@@ -1,32 +1,49 @@
 <md-content layout-padding ng-controller="RegistrationForm as forms">
+	<h1>Регистрация</h1>
 	<form name="projectForm" ng-submit="forms.submit()">
+
+		<md-input-container>
+			<label>Имя</label>
+			<input required name="clientName" ng-model="user.name">
+			<div ng-messages="projectForm.clientName.$error">
+				<div ng-message="required">Бедненький, как же ты без имени то!? :О</div>
+			</div>
+		</md-input-container>
+
 		<div layout="row">
-			<md-input-container flex="50">
-				<label>Имя</label>
-				<input required name="clientName" ng-model="project.clientName">
-				<div ng-messages="projectForm.clientName.$error">
-					<div ng-message="required">Бедненький, как же ты без имени то!? :О</div>
+
+			<md-input-container flex="50" class="md-block">
+				<label>E-mail</label>
+				<input required type="email" name="clientEmail" ng-model="user.email" minlength="10" maxlength="100" ng-pattern="/^.+@.+\..+$/" />
+				<div ng-messages="projectForm.clientEmail.$error" role="alert">
+					<div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
+						Email ошибочка.
+					</div>
 				</div>
 			</md-input-container>
 
-			<md-input-container flex="50">
-				<label>Фамилия</label>
-				<input required name="clientLastname" ng-model="project.clientLastname">
-				<div ng-messages="projectForm.clientLastname.$error">
-					<div ng-message="required">Бедненький, как же ты без фамилии то!? :О</div>
+			<md-input-container flex="50" class="md-block">
+				<label>Пароль</label>
+				<input required type="password" name="clientPass" ng-model="user.pass" minlength="6" />
+				<div ng-messages="projectForm.clientEmail.$error" role="alert">
+					<div ng-message-exp="['required', 'minlength']">
+						Минимальный размер 6 символов
+					</div>
 				</div>
 			</md-input-container>
+
 		</div>
-		<div layout="row" ng-controller="CtrlCountryCity as ctrlCC">
+		<div layout="row">
 			<md-autocomplete flex="50" class="md-block"
-				md-selected-item="ctrlCC.selectedItemCountry"
-				md-search-text-change="ctrlCC.searchTextChange(ctrlCC.searchTextCountry)"
-				md-search-text="ctrlCC.searchTextCountry"
-				md-selected-item-change="ctrlCC.selectedItemChange(item)"
-				md-items="item in ctrlCC.querySearch(ctrlCC.searchTextCountry,true)"
+				md-selected-item="forms.selectedItemCountry"
+				md-search-text-change="forms.searchTextChange(forms.searchTextCountry)"
+				md-search-text="forms.searchTextCountry"
+				md-selected-item-change="forms.selectedItemChange(item)"
+				md-items="item in forms.querySearch(forms.searchTextCountry,true)"
 				md-item-text="item.name"
 				md-min-length="0"
-				placeholder="Введите страну прибывания"
+				md-input-name="country"
+				md-floating-label="Страна"
 				md-menu-class="autocomplete-custom-template">
 				<md-item-template>
 					<span class="item-title">
@@ -35,14 +52,15 @@
 				</md-item-template>
 			</md-autocomplete>
 			<md-autocomplete flex="50" class="md-block"
-				md-selected-item="ctrlCC.selectedItemCity"
-				md-search-text-change="ctrlCC.searchTextChange(ctrlCC.searchTextCity)"
-				md-search-text="ctrlCC.searchTextCity"
-				md-selected-item-change="ctrlCC.selectedItemChange(item)"
-				md-items="item in ctrlCC.querySearch(ctrlCC.searchTextCity,false)"
+				md-selected-item="forms.selectedItemCity"
+				md-search-text-change="forms.searchTextChange(forms.searchTextCity)"
+				md-search-text="forms.searchTextCity"
+				md-selected-item-change="forms.selectedItemChange(item)"
+				md-items="item in forms.querySearch(forms.searchTextCity,false)"
 				md-item-text="item.capital"
 				md-min-length="0"
-				placeholder="Введите город прибывания"
+				md-input-name="city"
+				md-floating-label="Город"
 				md-menu-class="autocomplete-custom-template">
 				<md-item-template>
 					<span class="item-title">
@@ -52,50 +70,7 @@
 			</md-autocomplete>
 		</div>
 
-
 		<div layout="row">
-			<md-input-container flex="50" class="md-block">
-				<label>Ваш E-mail</label>
-				<input required type="email" name="clientEmail" ng-model="project.clientEmail"
-					minlength="10" maxlength="100" ng-pattern="/^.+@.+\..+$/" />
-
-				<div ng-messages="projectForm.clientEmail.$error" role="alert">
-					<div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
-						Email ошибочка.
-					</div>
-				</div>
-			</md-input-container>
-
-			<md-input-container flex="50">
-				<label>Пол</label>
-				<md-select name="type" ng-model="project.type">
-					<md-option value="male">Мужской</md-option>
-					<md-option value="women">Женский</md-option>
-				</md-select>
-			</md-input-container>
-		</div>
-		<md-input-container class="md-block">
-			<label>О себе</label>
-			<input md-maxlength="30" required md-no-asterisk name="description" ng-model="project.description">
-			<div ng-messages="projectForm.description.$error">
-				<div ng-message="required">Не забудь и тут заполнить.</div>
-				<div ng-message="md-maxlength">Не особо длинный текст :).</div>
-			</div>
-		</md-input-container>
-
-		<md-input-container class="md-block">
-			<md-checkbox name="tos" ng-model="project.tos" required>Я принимаю пользовательское сошлашение.</md-checkbox>
-			<div ng-messages="projectForm.tos.$error" multiple md-auto-hide="false">
-				<div ng-message="required">Для продолжение необходимо согласие.</div>
-			</div>
-		</md-input-container>
-
-		<md-input-container class="md-block">
-			<md-switch class="md-primary" name="special" ng-model="project.special">
-				Доступность анкеты в поисковой выдаче поисковых систем yandex, google etc.
-			</md-switch>
-		</md-input-container>
-		<div>
 			<md-button type="submit">Зарегистрироваться</md-button>
 		</div>
 	</form>

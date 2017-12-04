@@ -18,6 +18,13 @@ const
 	};
 
 
+function log(err){
+	console.log('[Compilation Error]');
+	console.log(err.fileName + ( err.loc ? `( ${err.loc.line}, ${err.loc.column} ): ` : ': '));
+	console.log('error Babel: ' + err.message + '\n');
+	console.log(err.codeFrame);
+	this.emit('end');
+}
 gulp
 
 	.task( 'sass',() => gulp.src( path.app + 'sass/**/*.+(sass|scss)')
@@ -33,7 +40,7 @@ gulp
 		.require( path.app + 'js-es6/app.js', { entry: true })
 		.transform("babelify", {presets: ['env', 'react']})
 		.bundle()
-		.on("error", function (err) { console.log("Error: " + err.message); })
+		.on("error", log)
 		.pipe(source('bundle.js'))
 		.pipe(gulp.dest( path.bundle + 'js/'))
 	)
