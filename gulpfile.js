@@ -11,65 +11,48 @@ const
 	babelify = require('babelify'),
 	browserify = require('browserify'),
 	source = require('vinyl-source-stream'),
+	buffer = require("vinyl-buffer"),
 	path = {
 		app: 'app/',
 		bower: 'bower_components/',
-		bundle: 'app/bundle/'
-	};
+		dist: 'dist/'
+	},
+	log = require('./gulp/log');
 
 
-function log(err){
-	console.log('[Compilation Error]');
-	console.log(err.fileName + ( err.loc ? `( ${err.loc.line}, ${err.loc.column} ): ` : ': '));
-	console.log('error Babel: ' + err.message + '\n');
-	console.log(err.codeFrame);
-	this.emit('end');
-}
+
 gulp
 
 	.task( 'sass',() => gulp.src( path.app + 'sass/**/*.+(sass|scss)')
 		.pipe( sourcemaps.init() )
 		.pipe( sass({ outputStyle: 'compressed' }) ).on( 'error', sass.logError )
-		.pipe( sourcemaps.write() )
 		.pipe( rename( {'suffix':'.min'} ) )
-		.pipe( gulp.dest( path.bundle + 'css') )
+		.pipe( sourcemaps.write('./') )
+		.pipe( gulp.dest( path.dist + 'css') )
 		.pipe( browserSync.reload({ stream:!0 }) )
 	)
 
-	.task('browserify', () => browserify( { debug: true })
-		.require( path.app + 'js-es6/app.js', { entry: true })
+	.task('browserify', () => browserify( {
+		entries:[ path.app + 'js-es6/app.js'],
+		debug: true
+	})
 		.transform("babelify", {presets: ['env', 'react']})
-		.bundle()
-		.on("error", log)
-		.pipe(source('bundle.js'))
-		.pipe(gulp.dest( path.bundle + 'js/'))
-	)
-
-	.task( 'js', ['browserify'],() => gulp.src( path.app + 'js-es6/**/*.js' )
-		.pipe( sourcemaps.init() )
-		.pipe( babel({
-			presets: ['env']
-		}) ).on('error', function(err){
-			console.log('[Compilation Error]');
-			console.log(err.fileName + ( err.loc ? `( ${err.loc.line}, ${err.loc.column} ): ` : ': '));
-			console.log('error Babel: ' + err.message + '\n');
-			console.log(err.codeFrame);
-			this.emit('end');
-		})
-		// .pipe( concat( 'main.min.js' ) )
-		.pipe( rename( {'suffix':'.min'} ) )
+		.bundle().on("error", log)
+		.pipe( source('main.min.js') )
+		.pipe( buffer() )
+		.pipe( sourcemaps.init( {loadMaps: true} ) )
 		.pipe( uglify() )
-		.pipe( sourcemaps.write() )
-		.pipe( gulp.dest( path.bundle + 'js') )
+		.pipe( sourcemaps.write('./') )
+		.pipe( gulp.dest( path.dist + 'js') )
 	)
 
-	.task( 'browser-sync', ()=>{
-		browserSync({
-			server: {
-				baseDir: path.app
-			}
-			// notify: false
-		});
+	.task( 'html',() => gulp.src( path.app + '**/*.html').pipe( gulp.dest( path.dist ) ))
+	.task( 'browser-sync-start',[,'vendor'], () => {
+		browserSync({ server: {baseDir: path.dist } });
+	})
+
+	.task( 'browser-sync',['html','browserify','sass'], () => {
+		browserSync({ server: { baseDir: path.dist } });
 	})
 
 	.task( 'vendor-css',() => gulp.src( [
@@ -78,7 +61,7 @@ gulp
 		.pipe( sourcemaps.init() )
 		.pipe( concat( 'vendor.min.css' ) )
 		.pipe( cssnano() )
-		.pipe( gulp.dest( path.bundle + 'css') ) )
+		.pipe( gulp.dest( path.dist + 'css') ) )
 
 	.task( 'vendor-js',() => gulp.src( [
 			path.bower + 'angular/angular.min.js',
@@ -89,35 +72,34 @@ gulp
 			path.bower + 'angular-resource/angular-resource.min.js',
 			path.bower + 'angular-ui-router/release/angular-ui-router.min.js',
 		] )
-		.pipe( sourcemaps.init() )
 		.pipe( concat( 'vendor.min.js') )
-		// .pipe( uglify() )
-		.pipe( sourcemaps.write() )
-		.pipe( gulp.dest( path.bundle + 'js' ) )
+		.pipe( uglify() )
+		.pipe( gulp.dest( path.dist + 'js' ) )
 	)
 
 
 	.task( 'vendor',[ 'vendor-css','vendor-js' ])
 
+	.task( 'img', () => gulp.src( path.app + 'img/**/*').pipe( gulp.dest( path.dist + 'img') ) )
 
+	.task( 'build',['sass','img','browserify','vendor'])
 
-	.task( 'watch-js',['browserify'],(done)=>{
+	.task( 'html-watch', [ 'html' ],( done ) => {
 		browserSync.reload();
 		done();
-	} )
-
-
-	.task( 'build',['sass','browserify','vendor'])
-
-
-	.task( 'watch', ()=>{
-		gulp.watch( path.app + 'sass/**/*.+(sass|scss)', ['sass'] );
-		gulp.watch( path.app + 'js-es6/**/*.js', ['watch-js'] );
-		gulp.watch( path.app + '**/*.html',() => {
-			browserSync.reload();
-		} );
+	})
+	.task( 'js-watch', [ 'browserify' ],( done ) => {
+		browserSync.reload();
+		done();
 	})
 
-	.task( 'ease', ['sass','browserify','browser-sync','watch'])
 
-	.task( 'default',['build','browser-sync','watch']);
+	.task( 'watch',['sass','browserify'], () => {
+		gulp.watch( path.app + 'sass/**/*.+(sass|scss)', ['sass'] );
+		gulp.watch( path.app + 'js-es6/**/*.js', ['js-watch']);
+		gulp.watch( path.app + '**/*.html',['html-watch']);
+	})
+
+	.task( 'dev', ['html', 'sass', 'browserify', 'browser-sync','watch'])
+
+	.task( 'default',['build','browser-sync-start','watch']);

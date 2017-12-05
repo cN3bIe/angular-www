@@ -10,7 +10,7 @@
     "start": "gulp",
     "vendor": "gulp vendor",
     "build": "gulp build",
-    "ease": "gulp ease"
+    "dev": "gulp dev"
   },
   "author": "",
   "license": "ISC",
@@ -29,6 +29,7 @@
     "gulp-sass": "^3.1.0",
     "gulp-sourcemaps": "^2.6.0",
     "gulp-uglify": "^3.0.0",
+    "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0"
   },
   "dependencies": {
