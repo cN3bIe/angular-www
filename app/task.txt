@@ -1,0 +1,59 @@
+у тебя в контроллерах используется $scope и this одновременно
+1. использовать this и controller as syntax
+2. $scope и обычный синтаксис в темплейтах
+хранить данные в них обоих плохо
+контроллеры можно писать через классы
+----
+['$stateProvider','$urlRouterProvider',function($stateProvider, $urlRouterProvider) - можно опускать и использовать просто function($stateProvider, $urlRouterProvider)
+при минификации потом плагин сам подставляет зависимости
+----
+if( !userIsAuthenticated() ) {
+  deferred.reject()
+  $location.path('/login');
+
+лучше $state.go('login')
+----
+всякие нужные функции можно напрямую в объект angular пихать (debounce) или во всякие UtilService
+а debounce уже есть встроенный в angular-material в сервисе $mdUtil, но об этом никто не знает, пока в сорцы не залезет, юзать можно короче
+----
+let user = null;
+   if( users.some( (el)=> ($scope.user.email === el.email?(user = el,true): false ) ) ){
+    if( user.pass === $scope.user.pass){
+     LS.set('login',true);
+     LS.set('user',user);
+     $location.path('/profile');
+    }
+   }
+
+лучше
+
+const user = users.find(u => u.email === $scope.user.email && el.password === $scope.user.pass)
+if (user) { //login }
+----
+let
+    fields = country?'name':'capital',
+    type = query?fields:'all',
+    deferred = $q.defer();
+
+лучше каждую переменную на отдельной строке объявлять, у нас eslint будет на такое ругаться
+----
+contryREST.query({
+    type,
+    country: query.toLowerCase(),
+    fields
+   }, result => {
+    deferred.resolve( result );
+   }, error => {
+    log( 'error',error );
+   })
+
+он уже возвращает промис, можно просто подписаться через then(response => {}, err => {})
+----
+if( obj && obj.name ) $scope.user.country = obj.name;
+
+тоже лучше раскрывать в блок
+
+
+теперь перепиши это все на компоненты
+сделай компонент с регистрацией переиспользуемым для профайла
+на профайле кнопку, которая может быть ['Update', 'Save'] - когда логинишься все поля readonly, при нажатии на Update -> поля можно редактировать, кнопка Update меняет название на Save, при еще одном нажатии изменения сохраняются

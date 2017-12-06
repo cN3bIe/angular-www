@@ -8,22 +8,22 @@
 	<link rel="stylesheet" type="text/css" href="/css/main.min.css" />
 </head>
 <body ng-app="app">
-	<div ng-controller="AppCtrl" ng-cloak layout="column">
+	<div ng-controller="AppCtrl as ac" ng-cloak layout="column">
 		<md-sidenav class="md-sidenav-left" md-component-id="left">
 
 			<md-toolbar class="md-theme-indigo">
 				<h1 class="md-toolbar-tools">Меню</h1>
-				<md-button ng-click="close()" class="md-icon-button">X</md-button>
+				<md-button ng-click="ac.close()" class="md-icon-button">X</md-button>
 			</md-toolbar>
-			<md-content layout-padding ng-controller="LeftCtrl">
+			<md-content layout-padding>
 				<nav class="navbar navbar-inverse" role="navigation">
 					<div class="navbar-header">
 						<a class="navbar-brand" ui-sref="#">Страницы</a>
 					</div>
 					<ul class="nav navbar-nav">
-						<li><a ng-click="close()" ui-sref="registration">Регистрация</a></li>
-						<li><a ng-click="close()" ui-sref="login">Войти</a></li>
-						<li><a ng-click="close()" ui-sref="profile">Профиль</a></li>
+						<li><a ng-click="ac.close()" ui-sref="registration">Регистрация</a></li>
+						<li><a ng-click="ac.close()" ui-sref="login">Войти</a></li>
+						<li><a ng-click="ac.close()" ui-sref="profile">Профиль</a></li>
 					</ul>
 				</nav>
 			</md-content>
@@ -32,11 +32,11 @@
 		<md-content>
 			<md-toolbar class="md-hue-2">
 				<div class="md-toolbar-tools">
-					<md-button class="md-icon-button" aria-label="Settings" ng-disabled="false"  ng-click="toggleLeft()">
+					<md-button class="md-icon-button" aria-label="Settings" ng-disabled="false" ng-click="ac.open()">
 						<md-icon md-svg-icon="img/icons/menu.svg"></md-icon>
 					</md-button>
 
-					<h2 flex md-truncate>{{title}}</h2>
+					<h2 flex md-truncate>{{ac.title}}</h2>
 				</div>
 			</md-toolbar>
 		</md-content>

@@ -58,7 +58,6 @@ gulp
 	.task( 'vendor-css',() => gulp.src( [
 			path.bower + 'angular-material/angular-material.min.css'
 		] )
-		.pipe( sourcemaps.init() )
 		.pipe( concat( 'vendor.min.css' ) )
 		.pipe( cssnano() )
 		.pipe( gulp.dest( path.dist + 'css') ) )
@@ -73,7 +72,7 @@ gulp
 			path.bower + 'angular-ui-router/release/angular-ui-router.min.js',
 		] )
 		.pipe( concat( 'vendor.min.js') )
-		.pipe( uglify() )
+		// .pipe( uglify() )
 		.pipe( gulp.dest( path.dist + 'js' ) )
 	)
 

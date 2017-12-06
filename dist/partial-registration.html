@@ -1,6 +1,6 @@
-<section class="section registration">
+<section class="section registration" ng-controller="RegistrationForm as forms">
 	<div class="wr">
-		<md-content layout-padding ng-controller="RegistrationForm as forms">
+		<md-content layout-padding>
 			<h1 class="title">Регистрация</h1>
 			<form name="projectForm" ng-submit="forms.submit()">
 
@@ -16,7 +16,7 @@
 
 					<md-input-container flex="50" class="md-block">
 						<label>E-mail</label>
-						<input required type="email" name="clientEmail" ng-model="user.email" minlength="10" maxlength="100" ng-pattern="/^.+@.+\..+$/" />
+						<input required type="email" name="clientEmail" ng-model="forms.user.email" minlength="10" maxlength="100" ng-pattern="/^.+@.+\..+$/" />
 						<div ng-messages="projectForm.clientEmail.$error" role="alert">
 							<div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
 								Email ошибочка.
@@ -26,7 +26,7 @@
 
 					<md-input-container flex="50" class="md-block">
 						<label>Пароль</label>
-						<input required type="password" name="clientPass" ng-model="user.pass" minlength="6" />
+						<input required type="password" name="clientPass" ng-model="forms.user.pass" minlength="6" />
 						<div ng-messages="projectForm.clientEmail.$error" role="alert">
 							<div ng-message-exp="['required', 'minlength']">
 								Минимальный размер 6 символов
@@ -38,10 +38,10 @@
 				<div layout="row">
 					<md-autocomplete flex="50" class="md-block"
 						md-selected-item="forms.selectedItemCountry"
-						md-search-text-change="forms.searchTextChange(forms.searchTextCountry)"
-						md-search-text="forms.searchTextCountry"
+						md-search-text-change="forms.searchTextChange(forms.user.country)"
+						md-search-text="forms.user.country"
 						md-selected-item-change="forms.selectedItemChange(item)"
-						md-items="item in forms.querySearch(forms.searchTextCountry,true)"
+						md-items="item in forms.querySearch(forms.user.country,true)"
 						md-item-text="item.name"
 						md-min-length="0"
 						md-input-name="country"
@@ -55,10 +55,10 @@
 					</md-autocomplete>
 					<md-autocomplete flex="50" class="md-block"
 						md-selected-item="forms.selectedItemCity"
-						md-search-text-change="forms.searchTextChange(forms.searchTextCity)"
-						md-search-text="forms.searchTextCity"
+						md-search-text-change="forms.searchTextChange(forms.user.city)"
+						md-search-text="forms.user.city"
 						md-selected-item-change="forms.selectedItemChange(item)"
-						md-items="item in forms.querySearch(forms.searchTextCity,false)"
+						md-items="item in forms.querySearch(forms.user.city,false)"
 						md-item-text="item.capital"
 						md-min-length="0"
 						md-input-name="city"
