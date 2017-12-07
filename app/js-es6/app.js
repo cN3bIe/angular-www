@@ -3,27 +3,27 @@ const log = console.log;
 
 import LS from './vendor/LS';
 
-import AppCtrl from './commponent/AppCtrl';
-import LoginForm from './commponent/LoginForm';
-import RegistrationForm from './commponent/RegistrationForm';
-import ProfileForm from './commponent/ProfileForm';
+import AppCtrl from './component/AppCtrl';
+import LoginForm from './component/LoginForm';
+import RegistrationForm from './component/RegistrationForm';
+import ProfileForm from './component/ProfileForm';
 
 
-let userIsAuthenticated = function() {
-	return !!LS.get( 'login' );
-}
+;((angular) => {
 
-let loginRequired = function($state, $q) {
-	console.log( $state );
-	console.log( userIsAuthenticated() );
-	let deferred = $q.defer();
-	if( !userIsAuthenticated() ) {
-		deferred.reject()
-		$state.go('login');
-	} else  deferred.resolve()
-	return deferred.promise;
-};
-;(() => {
+	let userIsAuthenticated = function() {
+		return !!LS.get( 'login' );
+	}
+
+	let loginRequired = function($state, $q) {
+		let deferred = $q.defer();
+		if( !userIsAuthenticated() ) {
+			deferred.reject()
+			$state.go('login');
+		} else  deferred.resolve()
+		return deferred.promise;
+	};
+
 	angular.module('app', ['ngMaterial','ngResource','ui.router', 'ngMessages', ])
 	.config(['$stateProvider','$urlRouterProvider',function($stateProvider, $urlRouterProvider) {
 
@@ -47,9 +47,18 @@ let loginRequired = function($state, $q) {
 
 	}])
 	.controller('AppCtrl', AppCtrl)
-	.controller('LoginForm', LoginForm)
-	.controller('RegistrationForm', RegistrationForm)
-	.controller('ProfileForm', ProfileForm)
+	.component('loginForm',{
+		controller: LoginForm,
+		templateUrl: 'tmpl/login-form.html'
+	})
+	.component('registrationForm',{
+		controller: RegistrationForm,
+		templateUrl: 'tmpl/user-info-form.html'
+	})
+	.component('profileForm',{
+		controller: ProfileForm,
+		templateUrl: 'tmpl/user-info-form.html'
+	})
 	.factory('contryREST',[
 		'$resource',
 		$resource => $resource('https://restcountries.eu/rest/v2/:type/:country:city',{
@@ -59,4 +68,4 @@ let loginRequired = function($state, $q) {
 			fields: '@fields'
 		})
 	]);
-})();
+})(window.angular);

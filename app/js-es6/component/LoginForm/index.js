@@ -1,12 +1,12 @@
 import LS from '../../vendor/LS';
 
 class LoginForm {
-	user: {
-		email: '',
-		pass: '',
-	};
 	constructor( $state ){
 		this._$state = $state;
+		this.user = {
+			email: '',
+			pass: '',
+		};
 	}
 	submit(){
 		let users = LS.get('users') || [];

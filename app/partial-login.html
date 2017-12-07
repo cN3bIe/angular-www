@@ -1,28 +1,6 @@
-<section class="section login" ng-controller="LoginForm as login">
+<section class="section login">
 	<div class="wr">
 		<h1 class="title">Вход</h1>
-		<md-content layout-padding>
-			<form name="loginForm" ng-submit="login.submit()">
-				<md-input-container class="md-block">
-					<label>Ваш E-mail</label>
-					<input required type="email" name="email" ng-model="login.user.email"
-					minlength="10" maxlength="100" ng-pattern="/^.+@.+\..+$/" />
-					<div ng-messages="projectForm.clientEmail.$error" role="alert">
-						<div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">Email ошибочка.</div>
-					</div>
-				</md-input-container>
-
-				<md-input-container class="md-block">
-					<label>Пароль</label>
-					<input required type="password" name="pass" ng-model="login.user.pass" minlength="6" maxlength="20" />
-					<div ng-messages="projectForm.clientPass.$error" role="alert">
-						<div ng-message-exp="['required', 'minlength', 'maxlength']">Пароль с ошибкой.</div>
-					</div>
-				</md-input-container>
-				<div>
-					<md-button type="submit">Войти</md-button>
-				</div>
-			</form>
-		</md-content>
+		<login-form />
 	</div>
 </section>

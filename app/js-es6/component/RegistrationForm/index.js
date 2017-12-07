@@ -1,17 +1,19 @@
 import LS from '../../vendor/LS';
 
 class RegistrationForm {
-	user: {
-		name: '',
-		email: '',
-		country: '',
-		city: '',
-		pass: '',
-	};
-	constructor( $state, $log,contryREST ){
+	constructor( $state, $log, contryREST ){
 		this._$log = $log;
 		this._$state = $state;
 		this._contryREST = contryREST;
+
+		this.btn = 'Зарегистрироваться';
+		this.user = {
+			name: '',
+			email: '',
+			country: '',
+			city: '',
+			pass: '',
+		};
 	}
 	querySearch( query,country ){
 		let fields = country?'name':'capital';
@@ -44,6 +46,9 @@ class RegistrationForm {
 	}
 	searchTextChange( obj ){
 		this.setCityCountry('Item changed to ', obj );
+	}
+	btnClick(){
+		// this.submit();
 	}
 	submit(){
 		let users = LS.get('users') || [];

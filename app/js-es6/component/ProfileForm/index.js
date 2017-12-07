@@ -3,16 +3,23 @@ import LS from '../../vendor/LS';
 import RegistrationForm from '../RegistrationForm';
 
 class ProfileForm extends RegistrationForm {
-	constructor( contryREST ){
-		super( contryREST );
+	constructor( $log, contryREST ){
+		super( $log, contryREST );
 		this.user = LS.get('user');
 		this.isDisabled = true;
-		this.btn = ['Update','Save'];
+		this.btnEnum = ['Update','Save'];
+		this.btnChange();
 	}
-	edit(){
+	btnChange(){
+		this.btn = this.isDisabled?this.btnEnum[0]:this.btnEnum[1];
+	}
+	btnClick(){
 		this.isDisabled = !this.isDisabled;
+		this.btnChange();
 	}
 	submit(){
+		if( !this.isDisabled ) return;
+		console.log('submit');
 		let oldUser = LS.get('user');
 		let users = LS.get('users') || [];
 		LS.set('users',users.map( (el,id,arr) => oldUser.id === el.id ? this.user: el ));
@@ -20,6 +27,6 @@ class ProfileForm extends RegistrationForm {
 	}
 };
 
-ProfileForm.$inject = [ 'contryREST' ];
+ProfileForm.$inject = [ '$log', 'contryREST' ];
 export default ProfileForm;
 

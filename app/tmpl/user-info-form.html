@@ -1,0 +1,98 @@
+<md-content layout-padding>
+	<form name="userInfoForm" ng-submit="$ctrl.submit()">
+		<md-input-container class="md-block">
+			<label>Имя</label>
+			<input
+				required
+				name="name"
+				ng-model="$ctrl.user.name"
+				ng-disabled="$ctrl.isDisabled"
+			/>
+			<div ng-messages="$ctrl.Name.$error">
+				<div ng-message="required">Бедненький, как же ты без имени то!? :О</div>
+			</div>
+		</md-input-container>
+
+		<div layout="row">
+
+			<md-input-container flex="50" class="md-block">
+				<label>E-mail</label>
+				<input
+					required
+					type="email"
+					name="email"
+					minlength="10"
+					maxlength="100"
+					ng-pattern="/^.+@.+\..+$/"
+					ng-model="$ctrl.user.email"
+					ng-disabled="$ctrl.isDisabled"
+				/>
+				<div ng-messages="$ctrl.email.$error" role="alert">
+					<div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
+						Email ошибочка.
+					</div>
+				</div>
+			</md-input-container>
+
+			<md-input-container flex="50" class="md-block">
+				<label>Пароль</label>
+				<input
+					required
+					type="password"
+					name="pass"
+					minlength="6"
+					ng-model="$ctrl.user.pass"
+					ng-disabled="$ctrl.isDisabled"
+				/>
+				<div ng-messages="$ctrl.pass.$error" role="alert">
+					<div ng-message-exp="['required', 'minlength']">
+						Минимальный размер 6 символов
+					</div>
+				</div>
+			</md-input-container>
+
+		</div>
+		<div layout="row">
+			<md-autocomplete flex="50" class="md-block"
+				md-selected-item="$ctrl.selectedItemCountry"
+				md-search-text-change="$ctrl.searchTextChange($ctrl.user.country)"
+				md-search-text="$ctrl.user.country"
+				md-selected-item-change="$ctrl.selectedItemChange(item)"
+				md-items="item in $ctrl.querySearch($ctrl.user.country,true)"
+				md-item-text="item.name"
+				md-min-length="0"
+				md-input-name="country"
+				md-floating-label="Страна"
+				md-menu-class="autocomplete-custom-template"
+				ng-disabled="$ctrl.isDisabled">
+				<md-item-template>
+					<span class="item-title">
+						<span> {{item.name}} </span>
+					</span>
+				</md-item-template>
+			</md-autocomplete>
+			<md-autocomplete flex="50" class="md-block"
+				md-selected-item="$ctrl.selectedItemCity"
+				md-search-text-change="$ctrl.searchTextChange($ctrl.user.city)"
+				md-search-text="$ctrl.user.city"
+				md-selected-item-change="$ctrl.selectedItemChange(item)"
+				md-items="item in $ctrl.querySearch($ctrl.user.city,false)"
+				md-item-text="item.capital"
+				md-min-length="0"
+				md-input-name="city"
+				md-floating-label="Город"
+				md-menu-class="autocomplete-custom-template"
+				ng-disabled="$ctrl.isDisabled">
+				<md-item-template>
+					<span class="item-title">
+						<span> {{item.capital}} </span>
+					</span>
+				</md-item-template>
+			</md-autocomplete>
+		</div>
+
+		<div layout="row">
+			<md-button type="submit" class="btn" ng-click="$ctrl.btnClick()">{{$ctrl.btn}}</md-button>
+		</div>
+	</form>
+</md-content>
