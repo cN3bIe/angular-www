@@ -1,6 +1,6 @@
-<section class="section profile">
+<section class="section profile" ng-controller="ProfileForm as $ctrl" >
 	<div class="wr">
 		<h1 class="title">Пользователь</h1>
-		<profile-form></profile-form>
+		<user-form user="$ctrl.user" is-disabled="$ctrl.isDisabled" btn="$ctrl.btn" submit="$ctrl.submit()" />
 	</div>
 </section>

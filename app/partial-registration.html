@@ -1,6 +1,6 @@
-<section class="section registration">
+<section class="section registration" ng-controller="RegistrationForm as $ctrl">
 	<div class="wr">
 		<h1 class="title">Регистрация</h1>
-		<registration-form />
+		<user-form user="$ctrl.user" is-disabled="$ctrl.isDisabled" btn="$ctrl.btn" submit="$ctrl.submit()" />
 	</div>
 </section>

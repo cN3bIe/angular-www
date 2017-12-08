@@ -1,5 +1,5 @@
-function searchCountryCity( $log, contryREST ){
-	class _searchCountryCity {
+function SearchCountryCity( $log, contryREST ){
+	class _SearchCountryCity {
 		constructor(){}
 		querySearch( query,country ){
 			let fields = country?'name':'capital';
@@ -33,8 +33,8 @@ function searchCountryCity( $log, contryREST ){
 			this.setCityCountry('Item changed to ', obj );
 		}
 	}
-	return _searchCountryCity;
+	return _SearchCountryCity;
 }
 
-searchCountryCity.$inject = [ '$log','contryREST'];
-export default searchCountryCity;
+SearchCountryCity.$inject = [ '$log','contryREST'];
+export default SearchCountryCity;

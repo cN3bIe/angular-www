@@ -1,4 +1,4 @@
-import LS from '../../vendor/LS';
+import LS from '../../class/LS';
 
 import searchCountryCity from '../../class/searchCountryCity';
 

@@ -52,7 +52,7 @@ gulp
 	)
 
 	.task( 'html',() => gulp.src( path.app + '**/*.html' ).pipe( gulp.dest( path.dist ) ))
-	.task( 'browser-sync-start',[,'vendor'], () => {
+	.task( 'browser-sync-start',[ 'build' ], () => {
 		browserSync({ server: {baseDir: path.dist } });
 	})
 
@@ -108,4 +108,4 @@ gulp
 
 	.task( 'dev', ['html', 'sass', 'browserify', 'browser-sync','watch'])
 
-	.task( 'default',['build','browser-sync-start','watch']);
+	.task( 'default', ['build','browser-sync-start','watch']);

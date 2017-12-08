@@ -1,10 +1,11 @@
 const log = console.log;
 
 
-import LS from './vendor/LS';
+import LS from './class/LS';
 
 import AppCtrl from './controller/App';
 import LoginForm from './component/LoginForm';
+import UserForm from './component/UserForm';
 import RegistrationForm from './controller/RegistrationForm';
 import ProfileForm from './controller/ProfileForm';
 
@@ -43,16 +44,11 @@ import ProfileForm from './controller/ProfileForm';
 
 
 	}])
-	.controller('AppCtrl', AppCtrl)
-	.component('loginForm', LoginForm)
-	.component('registrationForm',{
-		controller: RegistrationForm,
-		templateUrl: 'tmpl/userInfoForm.html'
-	})
-	.component('profileForm',{
-		controller: ProfileForm,
-		templateUrl: 'tmpl/userInfoForm.html'
-	})
+	.controller( 'AppCtrl', AppCtrl )
+	.component( 'loginForm', LoginForm )
+	.component( 'userForm', UserForm )
+	.controller( 'RegistrationForm', RegistrationForm )
+	.controller( 'ProfileForm', ProfileForm )
 	.factory('contryREST',[
 		'$resource',
 		$resource => $resource('https://restcountries.eu/rest/v2/:type/:country:city',{

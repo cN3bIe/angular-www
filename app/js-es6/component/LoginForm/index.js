@@ -1,5 +1,5 @@
-import LS from '../../vendor/LS';
-import path from 'path';
+import LS from '../../class/LS';
+
 function LoginForm( $state ){
 	class _LoginForm {
 		constructor( $state ){
