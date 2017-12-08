@@ -3,7 +3,7 @@ import LS from '../../vendor/LS';
 import searchCountryCity from '../../class/searchCountryCity';
 
 function RegistrationForm( $state, $log, contryREST ){
-	class _RegistrationForm extends searchCountryCity( $state, $log, contryREST ) {
+	class _RegistrationForm extends searchCountryCity( $log, contryREST ) {
 		constructor(){
 			super();
 			this.btn = 'Зарегистрироваться';

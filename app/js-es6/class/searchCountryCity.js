@@ -1,14 +1,13 @@
 function searchCountryCity( $log, contryREST ){
-		class _searchCountryCity {
+	class _searchCountryCity {
 		constructor(){}
 		querySearch( query,country ){
 			let fields = country?'name':'capital';
 			let type = query?fields:'all';
-			console.log( contryREST );
 			return contryREST.query({
 				type,
 				country: query.toLowerCase(),
-				fields
+				fields: country?fields + ';capital':fields
 			},
 			result => result,
 			error =>  $log.error( 'error',error ) )

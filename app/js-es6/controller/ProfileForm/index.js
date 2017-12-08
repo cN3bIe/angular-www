@@ -7,20 +7,22 @@ function ProfileForm( $log, contryREST ){
 		constructor(){
 			super();
 			this.user = LS.get('user');
-			this.isReadonly = true;
+			this.isDisabled = true;
 			this.btnEnum = ['Update','Save'];
 			this.btnChange();
 		}
 		btnChange(){
-			this.btn = this.isReadonly?this.btnEnum[0]:this.btnEnum[1];
+			this.btn = this.isDisabled?this.btnEnum[0]:this.btnEnum[1];
+		}
+		toggleReadonly(){
+			return this.isDisabled = !this.isDisabled;
 		}
 		btnClick(){
-			console.log( this );
-			this.isReadonly = !this.isReadonly;
+			this.toggleReadonly();
 			this.btnChange();
 		}
 		submit(){
-			if( !this.isReadonly ) return;
+			if( !this.isDisabled ) return;
 			console.log('submit');
 			let oldUser = LS.get('user');
 			let users = LS.get('users') || [];

@@ -5,16 +5,14 @@ import LS from './vendor/LS';
 
 import AppCtrl from './controller/App';
 import LoginForm from './component/LoginForm';
-import RegistrationForm from './component/RegistrationForm';
-import ProfileForm from './component/ProfileForm';
+import RegistrationForm from './controller/RegistrationForm';
+import ProfileForm from './controller/ProfileForm';
 
 ;((angular) => {
 
-	let userIsAuthenticated = function() {
-		return !!LS.get( 'login' );
-	}
+	let userIsAuthenticated = () => !!LS.get( 'login' );
 
-	let loginRequired = function($state, $q) {
+	let loginRequired = ($state, $q) => {
 		let deferred = $q.defer();
 		if( !userIsAuthenticated() ) {
 			deferred.reject()
@@ -24,7 +22,7 @@ import ProfileForm from './component/ProfileForm';
 	};
 
 	angular.module('app', ['ngMaterial','ngResource','ui.router', 'ngMessages', ])
-	.config(['$stateProvider','$urlRouterProvider',function($stateProvider, $urlRouterProvider) {
+	.config(['$stateProvider','$urlRouterProvider', ($stateProvider, $urlRouterProvider) => {
 
 		$urlRouterProvider.otherwise('/registration');
 
@@ -46,17 +44,14 @@ import ProfileForm from './component/ProfileForm';
 
 	}])
 	.controller('AppCtrl', AppCtrl)
-	.component('loginForm',{
-		controller: LoginForm,
-		templateUrl: 'tmpl/login-form.html'
-	})
+	.component('loginForm', LoginForm)
 	.component('registrationForm',{
 		controller: RegistrationForm,
-		templateUrl: 'tmpl/user-info-form.html'
+		templateUrl: 'tmpl/userInfoForm.html'
 	})
 	.component('profileForm',{
 		controller: ProfileForm,
-		templateUrl: 'tmpl/user-info-form.html'
+		templateUrl: 'tmpl/userInfoForm.html'
 	})
 	.factory('contryREST',[
 		'$resource',
