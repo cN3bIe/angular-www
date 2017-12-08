@@ -1,11 +1,8 @@
 import LS from '../../class/LS';
 
-import searchCountryCity from '../../class/searchCountryCity';
-
-function RegistrationForm( $state, $log, contryREST ){
-	class _RegistrationForm extends searchCountryCity( $log, contryREST ) {
+function RegistrationForm( $state ){
+	class _RegistrationForm {
 		constructor(){
-			super();
 			this.btn = 'Зарегистрироваться';
 			this.user = {
 				name: '',
@@ -27,5 +24,5 @@ function RegistrationForm( $state, $log, contryREST ){
 	}
 	return new _RegistrationForm();
 }
-RegistrationForm.$inject = [ '$state', '$log','contryREST'];
+RegistrationForm.$inject = [ '$state' ];
 export default RegistrationForm;

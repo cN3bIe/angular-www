@@ -1,11 +1,8 @@
 import LS from '../../class/LS';
 
-import searchCountryCity from '../../class/searchCountryCity';
-
-function ProfileForm( $log, contryREST ){
-	class _ProfileForm extends searchCountryCity( $log, contryREST ) {
+function ProfileForm(){
+	class _ProfileForm {
 		constructor(){
-			super();
 			this.user = LS.get('user');
 			this.isDisabled = true;
 			this.btnEnum = ['Update','Save'];
@@ -30,6 +27,5 @@ function ProfileForm( $log, contryREST ){
 	};
 	return new _ProfileForm();
 }
-ProfileForm.$inject = [ '$log', 'contryREST' ];
 export default ProfileForm;
 
