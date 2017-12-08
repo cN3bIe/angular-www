@@ -3,7 +3,7 @@ const log = console.log;
 
 import LS from './vendor/LS';
 
-import AppCtrl from './component/AppCtrl';
+import AppCtrl from './controller/App';
 import LoginForm from './component/LoginForm';
 import RegistrationForm from './component/RegistrationForm';
 import ProfileForm from './component/ProfileForm';
