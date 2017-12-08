@@ -15,7 +15,6 @@ function RegistrationForm( $state, $log, contryREST ){
 				pass: '',
 			};
 		}
-		btnClick(){}
 		submit(){
 			let users = LS.get('users') || [];
 			let min = 1;

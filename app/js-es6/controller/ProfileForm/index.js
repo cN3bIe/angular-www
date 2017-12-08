@@ -17,11 +17,9 @@ function ProfileForm( $log, contryREST ){
 		toggleReadonly(){
 			return this.isDisabled = !this.isDisabled;
 		}
-		btnClick(){
+		submit(){
 			this.toggleReadonly();
 			this.btnChange();
-		}
-		submit(){
 			if( !this.isDisabled ) return;
 			console.log('submit');
 			let oldUser = LS.get('user');

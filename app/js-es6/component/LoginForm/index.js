@@ -25,5 +25,5 @@ LoginForm.$inject = ['$state'];
 
 export default {
 	controller: LoginForm,
-	templateUrl: 'tmpl/LoginForm.html'
+	templateUrl: 'tmpl/loginForm.html'
 };
