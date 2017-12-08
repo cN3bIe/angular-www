@@ -8,7 +8,6 @@ import LoginForm from './component/LoginForm';
 import RegistrationForm from './component/RegistrationForm';
 import ProfileForm from './component/ProfileForm';
 
-
 ;((angular) => {
 
 	let userIsAuthenticated = function() {
