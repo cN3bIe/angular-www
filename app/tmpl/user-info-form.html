@@ -6,7 +6,7 @@
 				required
 				name="name"
 				ng-model="$ctrl.user.name"
-				ng-disabled="$ctrl.isDisabled"
+				ng-readonly="$ctrl.isReadonly"
 			/>
 			<div ng-messages="$ctrl.Name.$error">
 				<div ng-message="required">Бедненький, как же ты без имени то!? :О</div>
@@ -25,7 +25,7 @@
 					maxlength="100"
 					ng-pattern="/^.+@.+\..+$/"
 					ng-model="$ctrl.user.email"
-					ng-disabled="$ctrl.isDisabled"
+					ng-readonly="$ctrl.isReadonly"
 				/>
 				<div ng-messages="$ctrl.email.$error" role="alert">
 					<div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
@@ -42,7 +42,7 @@
 					name="pass"
 					minlength="6"
 					ng-model="$ctrl.user.pass"
-					ng-disabled="$ctrl.isDisabled"
+					ng-readonly="$ctrl.isReadonly"
 				/>
 				<div ng-messages="$ctrl.pass.$error" role="alert">
 					<div ng-message-exp="['required', 'minlength']">
@@ -64,7 +64,8 @@
 				md-input-name="country"
 				md-floating-label="Страна"
 				md-menu-class="autocomplete-custom-template"
-				ng-disabled="$ctrl.isDisabled">
+				ng-readonly="$ctrl.isReadonly"
+			>
 				<md-item-template>
 					<span class="item-title">
 						<span> {{item.name}} </span>
@@ -82,7 +83,8 @@
 				md-input-name="city"
 				md-floating-label="Город"
 				md-menu-class="autocomplete-custom-template"
-				ng-disabled="$ctrl.isDisabled">
+				ng-readonly="$ctrl.isReadonly"
+			>
 				<md-item-template>
 					<span class="item-title">
 						<span> {{item.capital}} </span>
