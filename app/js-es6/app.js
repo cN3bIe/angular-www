@@ -6,8 +6,8 @@ import LS from './class/LS';
 import AppCtrl from './controller/App';
 import LoginForm from './component/LoginForm';
 import UserForm from './component/UserForm';
-import RegistrationForm from './controller/RegistrationForm';
-import ProfileForm from './controller/ProfileForm';
+import RegistrationForm from './component/RegistrationForm';
+import ProfileForm from './component/ProfileForm';
 
 ;((angular) => {
 

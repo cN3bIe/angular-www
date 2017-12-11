@@ -1,7 +1,7 @@
 import LS from '../../class/LS';
 
-function ProfileForm(){
-	class _ProfileForm {
+function Profile(){
+	class _Profile {
 		constructor(){
 			this.user = LS.get('user');
 			this.isDisabled = true;
@@ -25,7 +25,9 @@ function ProfileForm(){
 			LS.set( 'user', this.user );
 		}
 	};
-	return new _ProfileForm();
+	return new _Profile();
 }
-export default ProfileForm;
-
+export default {
+	controller: Profile,
+	templateUrl: 'template.html'
+};

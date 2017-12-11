@@ -1,7 +1,7 @@
 import LS from '../../class/LS';
 
-function RegistrationForm( $state ){
-	class _RegistrationForm {
+function Registration( $state ){
+	class _Registration {
 		constructor(){
 			this.btn = 'Зарегистрироваться';
 			this.user = {
@@ -22,7 +22,10 @@ function RegistrationForm( $state ){
 			LS.set('users',users);
 		}
 	}
-	return new _RegistrationForm();
+	return new _Registration();
 }
-RegistrationForm.$inject = [ '$state' ];
-export default RegistrationForm;
+Registration.$inject = [ '$state' ];
+export default {
+	controller: Registration,
+	templateUrl: 'template.html'
+};

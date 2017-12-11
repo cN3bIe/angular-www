@@ -1,22 +1,23 @@
-class AppCtrl {
-	constructor($mdSidenav, $log,contryREST){
-		this.title = 'Hey';
-		this._$mdSidenav = $mdSidenav;
-		this._$log = $log;
-	}
-	close(){
-		this._$mdSidenav('left').close()
-			.then(() => {
-				this._$log.debug("close LEFT is done");
-			});
-	}
-	open(){
-		this._$mdSidenav('left').toggle()
-			.then( () => {
-				this._$log.debug("toggle Left is done")
-			});
-	}
-};
+function App( $mdSidenav, $log,contryREST ) {
+	class _App {
+		constructor(){
+			this.title = 'Hey';
+		}
+		close(){
+			$mdSidenav('left').close()
+				.then( () => {
+					$log.debug("close LEFT is done");
+				});
+		}
+		open(){
+			$mdSidenav('left').toggle()
+				.then( () => {
+					$log.debug("toggle Left is done")
+				});
+		}
+	};
+	return new _App();;
+}
 
-AppCtrl.$inject = ['$mdSidenav', '$log'];
-export default AppCtrl;
+App.$inject = ['$mdSidenav', '$log'];
+export default App;
